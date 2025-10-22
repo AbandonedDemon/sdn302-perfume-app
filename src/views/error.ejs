@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title><%= typeof title !== 'undefined' ? title : 'Something went wrong • Perfume' %></title>
+			<link rel="stylesheet" href="/css/theme.css" />
+	</head>
+	<body>
+		<header class="header container">
+			<div class="brand">
+				<div class="logo"></div>
+				<div>Perfume</div>
+			</div>
+			<a href="/" class="btn btn-ghost">Home</a>
+		</header>
+
+			<main class="auth-wrapper">
+				<section class="auth-card" role="alert" aria-live="assertive">
+					<h1>
+						<%= typeof heading !== 'undefined' ? heading : 'Error ' + (typeof status !== 'undefined' ? status : 500) %>
+					</h1>
+					<p class="auth-subtitle">
+						<%= typeof message !== 'undefined' && message ? message : 'An unexpected error occurred. Please try again later.' %>
+					</p>
+
+					<div style="display:flex; gap:10px; margin-top: 12px;">
+						<a class="btn btn-primary" href="/">Back to Home</a>
+						<button class="btn btn-ghost" type="button" onclick="window.history.back()">Go Back</button>
+					</div>
+
+					<% if (process && process.env && process.env.NODE_ENV !== 'production' && typeof stack !== 'undefined' && stack) { %>
+						<pre style="margin-top:16px; max-height:320px; overflow:auto; background: var(--panel); border: 1px solid rgba(148,163,184,.2); padding: 14px; border-radius: 10px; color: #fca5a5;">
+	<%= stack %>
+						</pre>
+					<% } %>
+				</section>
+			</main>
+
+		<footer class="footer">© <%= new Date().getFullYear() %> Perfume. All rights reserved.</footer>
+	</body>
+	</html>

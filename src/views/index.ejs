@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfume Collection</title>
+    <link rel="stylesheet" href="/css/theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .perfume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .perfume-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .perfume-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .perfume-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background-color: #f8f8f8;
+        }
+
+        .perfume-info {
+            padding: 20px;
+        }
+
+        .perfume-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .perfume-brand {
+            color: #667eea;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .perfume-audience {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        .perfume-audience.male {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .perfume-audience.female {
+            background-color: #fce4ec;
+            color: #c2185b;
+        }
+
+        .perfume-audience.unisex {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .no-perfumes {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-perfumes h2 {
+            color: #666;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .no-perfumes p {
+            color: #999;
+            font-size: 1.1em;
+        }
+
+        nav {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            margin-right: 20px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        </nav>
+
+        <header>
+            <h1>🌸 Perfume Collection</h1>
+            <p>Discover your signature scent from our exquisite collection</p>
+        </header>
+
+        <% if (perfumes && perfumes.length > 0) { %>
+            <div class="perfume-grid">
+                <% perfumes.forEach(perfume => { %>
+                    <a href="/perfume/<%= perfume._id %>" style="text-decoration: none; color: inherit;">
+                        <div class="perfume-card">
+                            <img src="<%= perfume.uri %>" alt="<%= perfume.perfumeName %>" class="perfume-image" onerror="this.src='https://via.placeholder.com/280x280?text=No+Image'">
+                            <div class="perfume-info">
+                                <div class="perfume-name"><%= perfume.perfumeName %></div>
+                                <div class="perfume-brand"><%= perfume.brand ? perfume.brand.brandName : 'Unknown Brand' %></div>
+                                <span class="perfume-audience <%= perfume.targetAudience.toLowerCase() %>">
+                                    <%= perfume.targetAudience.charAt(0).toUpperCase() + perfume.targetAudience.slice(1) %>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="no-perfumes">
+                <h2>No Perfumes Available</h2>
+                <p>Check back later for our amazing collection!</p>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
